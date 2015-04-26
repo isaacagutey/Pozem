@@ -1,0 +1,169 @@
+<div class="post">
+  <% @posts.each do |post| %>
+    <div id="post-body">
+      <div class="main-post row">
+       <div class="categories row">
+        <table>
+         <tbody>
+          <tr>
+            <td  class="post-categories"><%= render post.categories %></td>     
+            <td class="post-edit">  
+             <div class="dropdown">                                          
+              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-pencil-square-o"></i>
+              </a>
+              <ul class="dropdown-menu" role="menu">
+                <li data-toggle="modal" data-target="#edit-post-Modal">
+                  <p class="edit-post">Edit</p>
+                </li>        
+                <li>
+                  <p class="destroy-post"><%= link_to 'Delete', post, method: :delete, data: { confirm: 'Are you sure?' } %></p>
+                </li>
+              </ul> 
+             </div>  
+            </td>       
+          </tr>
+          </tbody>
+        </table>
+       </div>
+
+         <!-- Modal -->
+        <div class="modal fade" id="edit-post-Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+          <%= render 'posts/form' %>
+              </div>
+          </div> 
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="new-post-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="new-post modal-dialog">
+            <div class="modal-content">
+              <%= render 'posts/form' %>
+            </div>
+          </div>       
+        </div>
+
+       <div class="row">
+          <table class="profile">
+            <tbody>
+              <tr>
+                <td><%= image_tag current_user.gravatar_url %></td>
+                <td>
+                  <p class="name">Isaac Agutey</p>
+                  <p class="time">11:19 am</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      </div><!-- gravatar tags and edit -->
+        
+      <div class="title row">
+        <p><%= link_to post.title.capitalize, post, class:'post-title' %></p>
+      </div><!--  post title -->
+
+      <div class="image-container row">
+        <%= image_tag post.photo_url(:thumb), class:'image'%>
+      </div><!-- image row -->
+
+      <div class="post-body row">
+      <div class="post-text-body"><%= post.body %></div>
+      </div><!--  post text body -->
+        
+      <div class="c-s-l row">
+        <div class="comment col-xs-4 col-md-4 col-sm-4 col-lg-4">
+          <div class="dropdown" data-placement="left">
+            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" data-placement="left">
+              <p><i class="fa fa-comments"></i> Comment</p>
+            </a>
+              <ul class="dropdown-menu" role="menu">
+                <li data-toggle="modal" data-target="#comment-Modal">
+                <div class="row">
+                  <div class="comment-gravatar col-xs-2 col-md-2 col-sm-2 col-lg-2">
+                    <%= image_tag current_user.gravatar_url %>              
+                  </div>
+                  <div class="comment-form col-xs-10 col-md-10 col-sm-10 col-lg-10">
+                  </div>
+                </div>
+                </li>        
+              </ul> 
+          </div>
+        </div>
+
+        <div class="share col-xs-4 col-md-4 col-sm-4 col-lg-4">
+          <p class="share"><i class="fa fa-share-alt"></i> Share</p>
+        </div>
+
+        <div class="like col-xs-4 col-md-4 col-sm-4 col-lg-4">
+          <p class="like"><i class="fa fa-thumbs-up"></i> Like</p>
+        </div>
+
+      </div><!-- like, comment, share -->
+
+      <div class="comments row">        
+       <% post.comments.each do |comment| %>
+        <div class="main-comment row">
+          <table>
+            <tbody>
+              <tr>
+                <td class="post-comments-gravatar">
+                  <div class="comment-gravatar">
+                  <%= image_tag comment.creator.gravatar_url %>
+                  </div>
+                </td>
+
+                <td class="post-comments-body">
+       
+<div class="comment-time row">        
+  <small>
+   <% if (Time.now - comment.created_at) <  60 %>
+   <%= l(Time.now, format: '%S').to_i - l(comment.created_at, format: '%S').to_i %> s
+
+   <% elsif (Time.now - comment.created_at) > 60 && (Time.now - comment.created_at) <  3600 %>
+   <%= time = (l(Time.now, format: '%M').to_i - l(comment.created_at, format: '%M').to_i) %>
+   <% if time == 1 %> min <%elsif time > 1%> mins <%end%>
+
+   <% elsif (Time.now - comment.created_at) > 3600 && (Time.now - comment.created_at) <  86400 %>
+   <%time = ( l(Time.now, format: '%H').to_i - l(comment.created_at, format: '%H').to_i) %>
+
+   <% if time == 1 %><%=time%> hr <%elsif time > 1%><%=time%> hrs <%elsif time <= 0%> yesterday <%end%>
+
+   <% elsif (Time.now - comment.created_at) > 86400 && (Time.now - comment.created_at) <  604800 %>
+
+   <%= time = ((Time.now - comment.created_at).round/86400) %>
+      <%if time == 1%> day <%else%> days <%end%>
+
+   <% elsif (Time.now - comment.created_at) > 604800 && (Time.now - comment.created_at) <  2678400 %>
+   <%= l(comment.created_at, format: '%B, %d %Y %H:%M:%S') %>
+
+   <% elsif (Time.now - comment.created_at) > 2678400 && (Time.now - comment.created_at) < 31536000 %>
+   <%= l(comment.created_at, format: '%B, %d %Y %H:%M:%S') %>
+
+   <% elsif (Time.now - comment.created_at) > 31536000 && (Time.now - comment.created_at) <  315360000 %>
+   <%= l(comment.created_at, format: '%B, %d %Y %H:%M:%S') %>
+
+   <%else%>
+   <%= l(comment.created_at, format: '%B, %d %Y %H:%M:%S') %>
+   <%end%>
+  </small>
+</div>
+                    <div class="comment-body row">
+                      <div><small><%= comment.body %></small></div>                    
+                    </div>
+                    <div class="like-reply row"><small>Like. Reply</small></div>
+                  </td>
+                      
+              <td>
+                <%= image_tag 'edit.png', width: '10', height: '10' %>           
+              </td>
+            </tr>
+          </tbody>
+        </table>      
+      </div>
+     <% end %>
+    </div><!--  comments form and comments -->
+
+  </div><!-- main-post row -->   
+<% end %>
+</div><!--  post body -->
+</div><!-- container-fluid -->

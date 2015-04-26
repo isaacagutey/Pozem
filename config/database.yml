@@ -1,0 +1,29 @@
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: 5
+
+development:
+  <<: *default
+  database: postgreSQL_development
+
+
+test:
+  <<: *default
+  database: postgreSQL_test
+
+#   DATABASE_URL="postgres://myuser:mypass@localhost/somedatabase"
+#
+# You can use this database configuration with:
+#
+#   production:
+#     url: <%= ENV['DATABASE_URL'] %>
+#
+production:
+  <<: *default
+  database: postgreSQL_production
+  username: ISAACAGUTEY
+  password: <%= ENV['POSTGRESQL_DATABASE_PASSWORD'] %>
