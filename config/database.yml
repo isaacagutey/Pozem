@@ -19,11 +19,10 @@ test:
 #
 # You can use this database configuration with:
 #
-#   production:
-#     url: <%= ENV['DATABASE_URL'] %>
-#
+
 production:
   <<: *default
-  database: postgreSQL_production
-  username: ISAACAGUTEY
+  database: dfdu9lrb5t78u7
+  username: xnipmvtobztkbf
   password: <%= ENV['POSTGRESQL_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>

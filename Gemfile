@@ -22,8 +22,6 @@ gem 'carrierwave'
 
 gem 'rmagick'
 
-gem "paperclip", "~> 4.2"
-
 gem  'fog'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
