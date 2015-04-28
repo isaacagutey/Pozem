@@ -1,4 +1,12 @@
 <div class="post">
+ <!--New Post Modal -->
+  <div class="modal fade" id="new-post-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="new-post modal-dialog">
+      <div class="modal-content">
+        <%= render 'posts/form' %>
+      </div>
+    </div>       
+  </div>
   <% @posts.each do |post| %>
     <div id="post-body">
       <div class="main-post row">
@@ -12,11 +20,15 @@
               <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-pencil-square-o"></i>
               </a>
               <ul class="dropdown-menu" role="menu">
-                <li data-toggle="modal" data-target="#edit-post-Modal">
-                  <p class="edit-post">Edit</p>
+                <li data-toggle="modal" data-target="#edit-post-Modal" data-id="1">
+                  <p class="edit-post">
+                  <%= link_to "Edit", edit_post_path(post) %>
+                  </p>
                 </li>        
                 <li>
-                  <p class="destroy-post"><%= link_to 'Delete', post, method: :delete, data: { confirm: 'Are you sure?' } %></p>
+                  <p class="destroy-post">
+                  <%= link_to 'Delete', post, method: :delete, data: { confirm: 'Are you sure?' } %>
+                  </p>
                 </li>
               </ul> 
              </div>  
@@ -26,32 +38,14 @@
         </table>
        </div>
 
-         <!-- Modal -->
-        <div class="modal fade" id="edit-post-Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-              <div class="modal-content">
-          <%= render 'posts/form' %>
-              </div>
-          </div> 
-        </div>
-
-        <!-- Modal -->
-        <div class="modal fade" id="new-post-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="new-post modal-dialog">
-            <div class="modal-content">
-              <%= render 'posts/form' %>
-            </div>
-          </div>       
-        </div>
-
        <div class="row">
           <table class="profile">
             <tbody>
               <tr>
                 <td><%= image_tag current_user.gravatar_url %></td>
                 <td>
-                  <p class="name">Isaac Agutey</p>
-                  <p class="time">11:19 am</p>
+                  <p class="name lobster">Isaac Agutey</p>
+                  <p class="time lobster">11:19 am</p>
                 </td>
               </tr>
             </tbody>
@@ -59,7 +53,7 @@
       </div><!-- gravatar tags and edit -->
         
       <div class="title row">
-        <p><%= link_to post.title.capitalize, post, class:'post-title' %></p>
+        <p class="lobster"><%= link_to post.title.capitalize, post, class:'post-title' %></p>
       </div><!--  post title -->
 
       <div class="image-container row">
@@ -67,23 +61,44 @@
       </div><!-- image row -->
 
       <div class="post-body row">
-      <div class="post-text-body"><%= post.body %></div>
+      <div class="post-text-body"><%= post.body.html_safe %></div>
       </div><!--  post text body -->
         
       <div class="c-s-l row">
         <div class="comment col-xs-4 col-md-4 col-sm-4 col-lg-4">
-          <div class="dropdown" data-placement="left">
+          <div class="dropdown" data-placement="left" id="comment-dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" data-placement="left">
-              <p><i class="fa fa-comments"></i> Comment</p>
+              <p class="lobster"><i class="fa fa-comments"></i> Comment</p>
             </a>
-              <ul class="dropdown-menu" role="menu">
+              <ul class="comment dropdown-menu" role="menu">
                 <li data-toggle="modal" data-target="#comment-Modal">
-                <div class="row">
-                  <div class="comment-gravatar col-xs-2 col-md-2 col-sm-2 col-lg-2">
-                    <%= image_tag current_user.gravatar_url %>              
-                  </div>
-                  <div class="comment-form col-xs-10 col-md-10 col-sm-10 col-lg-10">
-                  </div>
+                <div class="row">                 
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td class="comment-gravatar">
+                         <%= image_tag current_user.gravatar_url %>
+                        </td>
+                        <td class="lobster">
+                        Isaac Agutey
+                        </td>
+                      </tr>
+                      <tr>
+                      <td colspan="2">
+                      <%= form_for [post, Comment.new], remote: true do |f| %>
+                        <%= render 'shared/errors', obj: @comment %>
+                          <div class="comment-form field">
+                            <%= f.bootsy_area :body, placeholder: "Comment here", class:'comment-form', editor_options: {color:false, font_styles:false, lists: false} %>
+                          </div>
+                          <br>
+                          <div class="actions">
+                            <%= f.submit class: 'btn btn-success'%>
+                          </div>
+                        <% end %>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>                  
                 </div>
                 </li>        
               </ul> 
@@ -91,79 +106,76 @@
         </div>
 
         <div class="share col-xs-4 col-md-4 col-sm-4 col-lg-4">
-          <p class="share"><i class="fa fa-share-alt"></i> Share</p>
+          <p class="share lobster"><i class="fa fa-share-alt"></i> Share</p>
         </div>
 
         <div class="like col-xs-4 col-md-4 col-sm-4 col-lg-4">
-          <p class="like"><i class="fa fa-thumbs-up"></i> Like</p>
+          <p class="like lobster"><i class="fa fa-thumbs-up"></i> Like</p>
         </div>
 
-      </div><!-- like, comment, share -->
+        </div><!-- like, comment, share -->
 
       <div class="comments row">        
-       <% post.comments.each do |comment| %>
         <div class="main-comment row">
           <table>
-            <tbody>
-              <tr>
-                <td class="post-comments-gravatar">
-                  <div class="comment-gravatar">
-                  <%= image_tag comment.creator.gravatar_url %>
-                  </div>
+           <tbody id="<%=dom_id(post)%>">
+           <% post.comments.each do |comment| %>
+           <tr>
+               <td class="post-comments-gravatar">
+                <div class="comment-gravatar">
+                <%= image_tag comment.creator.gravatar_url %>
+                </div>
                 </td>
+                <td class="post-comments-body">       
+                <div class="comment-time row">        
+                  <small>
+                   <% if (Time.now - comment.created_at) <  60 %>
+                   <%= l(Time.now, format: '%S').to_i - l(comment.created_at, format: '%S').to_i %> s
 
-                <td class="post-comments-body">
-       
-<div class="comment-time row">        
-  <small>
-   <% if (Time.now - comment.created_at) <  60 %>
-   <%= l(Time.now, format: '%S').to_i - l(comment.created_at, format: '%S').to_i %> s
+                   <% elsif (Time.now - comment.created_at) > 60 && (Time.now - comment.created_at) <  3600 %>
+                   <%= time = (l(Time.now, format: '%M').to_i - l(comment.created_at, format: '%M').to_i) %>
+                   <% if time == 1 %> min <%elsif time > 1%> mins <%end%>
 
-   <% elsif (Time.now - comment.created_at) > 60 && (Time.now - comment.created_at) <  3600 %>
-   <%= time = (l(Time.now, format: '%M').to_i - l(comment.created_at, format: '%M').to_i) %>
-   <% if time == 1 %> min <%elsif time > 1%> mins <%end%>
+                   <% elsif (Time.now - comment.created_at) > 3600 && (Time.now - comment.created_at) <  86400 %>
+                   <%time = ( l(Time.now, format: '%H').to_i - l(comment.created_at, format: '%H').to_i) %>
 
-   <% elsif (Time.now - comment.created_at) > 3600 && (Time.now - comment.created_at) <  86400 %>
-   <%time = ( l(Time.now, format: '%H').to_i - l(comment.created_at, format: '%H').to_i) %>
+                   <% if time == 1 %><%=time%> hr <%elsif time > 1%><%=time%> hrs <%elsif time <= 0%> yesterday <%end%>
 
-   <% if time == 1 %><%=time%> hr <%elsif time > 1%><%=time%> hrs <%elsif time <= 0%> yesterday <%end%>
+                   <% elsif (Time.now - comment.created_at) > 86400 && (Time.now - comment.created_at) <  604800 %>
 
-   <% elsif (Time.now - comment.created_at) > 86400 && (Time.now - comment.created_at) <  604800 %>
+                   <%= time = ((Time.now - comment.created_at).round/86400) %>
+                      <%if time == 1%> day <%else%> days <%end%>
 
-   <%= time = ((Time.now - comment.created_at).round/86400) %>
-      <%if time == 1%> day <%else%> days <%end%>
+                   <% elsif (Time.now - comment.created_at) > 604800 && (Time.now - comment.created_at) <  2678400 %>
+                   <%= l(comment.created_at, format: '%B, %d %Y %H:%M:%S') %>
 
-   <% elsif (Time.now - comment.created_at) > 604800 && (Time.now - comment.created_at) <  2678400 %>
-   <%= l(comment.created_at, format: '%B, %d %Y %H:%M:%S') %>
+                   <% elsif (Time.now - comment.created_at) > 2678400 && (Time.now - comment.created_at) < 31536000 %>
+                   <%= l(comment.created_at, format: '%B, %d %Y %H:%M:%S') %>
 
-   <% elsif (Time.now - comment.created_at) > 2678400 && (Time.now - comment.created_at) < 31536000 %>
-   <%= l(comment.created_at, format: '%B, %d %Y %H:%M:%S') %>
+                   <% elsif (Time.now - comment.created_at) > 31536000 && (Time.now - comment.created_at) <  315360000 %>
+                   <%= l(comment.created_at, format: '%B, %d %Y %H:%M:%S') %>
 
-   <% elsif (Time.now - comment.created_at) > 31536000 && (Time.now - comment.created_at) <  315360000 %>
-   <%= l(comment.created_at, format: '%B, %d %Y %H:%M:%S') %>
-
-   <%else%>
-   <%= l(comment.created_at, format: '%B, %d %Y %H:%M:%S') %>
-   <%end%>
-  </small>
-</div>
-                    <div class="comment-body row">
-                      <div><small><%= comment.body %></small></div>                    
-                    </div>
-                    <div class="like-reply row"><small>Like. Reply</small></div>
-                  </td>
-                      
+                   <%else%>
+                   <%= l(comment.created_at, format: '%B, %d %Y %H:%M:%S') %>
+                   <%end%>
+                  </small>
+                </div>
+                <div class="comment-body row">
+                  <div><small><%= comment.body.html_safe %></small></div>
+                </div>
+                <div class="like-reply row"><small>Like. Reply</small></div>
+              </td>                     
               <td>
                 <%= image_tag 'edit.png', width: '10', height: '10' %>           
               </td>
-            </tr>
-          </tbody>
+           </tr>
+           <%end%>
+              <%= render @comment %>      
+          </tbody>       
         </table>      
-      </div>
-     <% end %>
-    </div><!--  comments form and comments -->
-
-  </div><!-- main-post row -->   
-<% end %>
-</div><!--  post body -->
+       </div><!-- main-comment-row -->
+      </div><!--  comments form and comments -->
+     </div><!-- main-post row -->   
+    <% end %>
+  </div><!--  post body -->
 </div><!-- container-fluid -->

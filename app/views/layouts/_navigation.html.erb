@@ -19,11 +19,6 @@
 
       <%= render 'posts/searchform' %> 
 
-      <!-- Button trigger modal -->
-      <button type="button" class="new-post-modal-btn btn btn-primary btn-sm" data-toggle="modal" data-target="#new-post-modal">
-        Create Post
-      </button>
-
 
       <% if user_signed_in? %>
       <ul class="nav navbar-nav navbar-right">
@@ -37,6 +32,12 @@
           </ul>
         </li>
       </ul>
+
+ <!-- Button trigger modal -->
+      <button type="button" class="new-post-modal-btn btn btn-primary btn-sm" data-toggle="modal" data-target="#new-post-modal">
+        Create Post
+      </button>
+      
        <% else %>
        <ul class="nav navbar-nav navbar-right">
         <li><%= link_to "Sign Up", new_user_registration_path, class: "active" %></li>

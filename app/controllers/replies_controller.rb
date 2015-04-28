@@ -1,6 +1,5 @@
 class RepliesController < ApplicationController
 def create
-		binding.pry
 		@comment = Comment.find(params[:comment_id])
 
 		@reply = Comment.new(params.require(:reply).permit(:body))

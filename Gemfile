@@ -5,10 +5,13 @@ gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'bootstrap-sass', '~> 3.2.0.2'
+gem 'autoprefixer-rails'
 gem 'devise'
 gem 'pg'
 gem 'gravtastic'
 gem "font-awesome-rails"
+gem 'sprockets_better_errors'
+gem 'bootsy'
 
 #Oauth Authentication
 gem 'omniauth'

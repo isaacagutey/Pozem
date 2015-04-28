@@ -1,6 +1,10 @@
+ENV['AWS_ACCESS_KEY_ID'] = "AKIAJSZ5CYHCODX537KA";
+ENV['AWS_SECRET_ACCESS_KEY'] = "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";
+ENV['AWS_S3_BUCKET'] = "turntotechrails";
+
 PostitTemplate::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-
+  config.assets.raise_production_errors = true
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.

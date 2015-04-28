@@ -12,8 +12,8 @@
     <%= f.text_field :title, placeholder: "Enter title" %>
   </div>
   </br>
-  <div class="field">
-    <%= f.text_area :body, size: "50x5", placeholder: "Enter post body"%>
+  <div class="field bootsy-text-area">
+    <%= f.bootsy_area :body, size: "50x5", placeholder: "Enter post body", editor_options: { image: false }%>
   </div>
    <div class="field">
     <%= f.file_field(:photo,  class: 'btn btn-info') do %>

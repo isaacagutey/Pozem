@@ -2,7 +2,7 @@ class PhotoUploader < CarrierWave::Uploader::Base
 
 	include CarrierWave::RMagick
 
-	storage :file
+	storage :fog
 
 	include CarrierWave::MimeTypes
 	process :set_content_type
@@ -15,4 +15,7 @@ class PhotoUploader < CarrierWave::Uploader::Base
      process :resize_to_fit => [650, 400]
   	end
   	
+    def extension_white_list
+      %w(jpg jpeg gif png)
+    end
 end

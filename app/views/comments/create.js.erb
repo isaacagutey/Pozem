@@ -1,0 +1,6 @@
+
+$('tbody#<%=dom_id(@post)%>').html("<%= escape_javascript(render @comment) %>");
+
+$('iframe.wysihtml5-sandbox').val("");
+
+$('div#comment-dropdown.dropdown, div.dropdown').removeClass("open");
