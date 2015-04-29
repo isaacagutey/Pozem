@@ -19,10 +19,8 @@ test:
 #
 # You can use this database configuration with:
 #
-
 production:
-  <<: *default
   database: dfdu9lrb5t78u7
   username: xnipmvtobztkbf
-  password: <%= ENV['POSTGRESQL_DATABASE_PASSWORD'] %>
-  url: <%= ENV['DATABASE_URL'] %>
+  url:  <%= ENV["DATABASE_URL"] %>
+  pool: <%= ENV["DB_POOL"] || ENV['MAX_THREADS'] || 5 %>
