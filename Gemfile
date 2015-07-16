@@ -26,6 +26,8 @@ gem 'carrierwave'
 gem 'rmagick'
 
 gem  'fog'
+
+gem 's3_direct_upload'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
@@ -45,5 +47,4 @@ end
 group :production do
   gem 'rails_12factor'
   gem 'puma'
-  ruby '2.0.0'
 end

@@ -13,12 +13,16 @@
   </div>
   </br>
   <div class="field bootsy-text-area">
-    <%= f.bootsy_area :body, size: "50x5", placeholder: "Enter post body", editor_options: { image: false }%>
+    <%= f.bootsy_area :body, size: "50x5", placeholder: "Enter post body"%>
   </div>
    <div class="field">
+  
+ <div class="field">
     <%= f.file_field(:photo,  class: 'btn btn-info') do %>
     <i class="fa fa-camera"></i>
     <% end %>
+  </div>
+
   </div>
 
   <br>
@@ -27,4 +31,10 @@
   </div>
 <% end %>
 
+<script id="template-upload" type="text/x-tmpl">
+<div id="file-{%=o.unique_id%}" class="upload">
+  {%=o.name%}
+  <div class="progress"><div class="bar" style="width: 0%"></div></div>
+</div>
+</script>
 
