@@ -1,0 +1,7 @@
+<% if Rails.env.development? || Rails.env.staging? %>
+   <div class="renv-ribbon-wrapper right">
+      <div class="renv-ribbon">
+         <a href="javascript:void(0);"><%= Rails.env.titleize %></a>
+      </div>
+   </div>
+<% end %>

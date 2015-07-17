@@ -306,6 +306,7 @@ DEPENDENCIES
   font-awesome-rails
   gravtastic
   jbuilder (~> 1.2)
+  jquery-fileupload-rails
   jquery-rails
   omniauth
   omniauth-facebook

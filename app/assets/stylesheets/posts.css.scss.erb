@@ -1,0 +1,91 @@
+//= depend_on_asset "bootstrap/glyphicons-halflings-regular.eot"
+//= depend_on_asset "bootstrap/glyphicons-halflings-regular.woff"
+//= depend_on_asset "bootstrap/glyphicons-halflings-regular.ttf"
+//= depend_on_asset "bootstrap/glyphicons-halflings-regular.svg"
+
+@import "bootsy";
+
+@import "bootstrap-sprockets";
+
+@import "bootstrap";
+
+@import "font-awesome";
+
+@import url(http://fonts.googleapis.com/css?family=Lobster);
+
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro);
+
+@import "bootstrap-sprockets";
+
+@import "bootstrap";
+
+@import "font-awesome";
+
+@import url(http://fonts.googleapis.com/css?family=Lobster);
+
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro);
+
+$primarySansSerif: 'Open Sans', Helvetica, Arial, sans-serif;
+
+
+<% if Rails.env.development? || Rails.env.staging? %>
+  .renv-ribbon {
+    position: fixed;
+    padding: 2px 0;
+    background-color: #a00;
+
+   
+    /* Add a drop shadow */
+    -webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.5);
+
+    z-index: 10001;
+    pointer-events: auto;
+
+    a, a:hover {
+      font-family: $primarySansSerif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: white;
+
+      text-decoration: none;
+      text-shadow: 0 -1px rgba(0,0,0,0.5);
+      text-align: center;
+
+      /* Set the geometry. If you fiddle with these you'll also need to tweak the top and right values in #renv-ribbon. */
+      width: 200px;
+      line-height: 20px;
+
+      /* Set the layout properties */
+      display: inline-block;
+      padding: 2px 0;
+
+      /* Add "stitching" effect */
+      border-width: 1px 0;
+      border-style: dotted;
+      border-color: rgba(255,255,255,0.7);
+    }
+  }
+
+  .renv-ribbon-wrapper {
+    width: 150px;
+    height: 150px;
+    position: fixed;
+    overflow: hidden;
+    top: 0;
+    z-index: 10001;
+    pointer-events: none;
+    &.right { right: 0; }
+    &.right .renv-ribbon {
+      top: 42px;
+      right: -85px;
+
+      /* Rotate the banner 45 degrees */
+      -webkit-transform: rotate(90deg);
+      -moz-transform: rotate(90deg);
+      -o-transform: rotate(90deg);
+      transform: rotate(90deg);
+    }
+  }
+<% end %>
